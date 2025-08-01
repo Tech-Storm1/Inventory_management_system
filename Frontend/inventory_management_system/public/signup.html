@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no" />
+    <title>Genius Co.</title>
+    <link href="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css" rel="stylesheet" />
+    <link href="css/mystyle.css" rel="stylesheet" />
+    <link href="//maxcdn.bootstrapcdn.com/font-awesome/4.2.0/css/font-awesome.min.css" rel="stylesheet" />
+    <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
+    <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.0.0/js/bootstrap.min.js"></script>
+</head>
+<body>
+<div class="container">
+    <div class="row">
+        <div class="col-md-offset-5 col-md-4 text-center">
+            <h1 class='text-white'>Signup Form</h1>
+            <div class="form-login"></br>
+                <h4>Secure Signup</h4>
+                </br>
+                <input type="text" id="userName" class="form-control input-sm chat-input" placeholder="username" />
+                </br></br>
+                <input type="email" id="userEmail" class="form-control input-sm chat-input" placeholder="email" />
+                </br></br>
+                <input type="password" id="userPassword" class="form-control input-sm chat-input" placeholder="password" />
+                </br></br>
+                <div class="wrapper">
+                    <span class="group-btn">
+                        <button id="signupBtn" class="btn btn-danger btn-md">signup <i class="fa fa-user-plus"></i></button>
+                    </span>
+                </div>
+                <p id="message" class="text-white mt-3"></p>
+            </div>
+        </div>
+    </div>
+    </br></br></br>
+    <div class="footer text-white text-center">
+        <p>© 2025 Unique Signup Form. All rights reserved | Design by Genius</a></p>
+    </div>
+</div>
+
+<script>
+$(document).ready(function () {
+    $('#signupBtn').click(function () {
+        const username = $('#userName').val();
+        const email = $('#userEmail').val();
+        const password = $('#userPassword').val();
+        $('#message').text('');
+
+        if (!username || !email || !password) {
+            $('#message').text('Please enter username, email and password');
+            return;
+        }
+
+        $.ajax({
+            url: 'http://localhost:3001/register',
+            method: 'POST',
+            contentType: 'application/json',
+            data: JSON.stringify({ username: username, email: email, password: password }),
+            success: function (response) {
+                $('#message').text('Signup successful. You can now login.');
+                // Optionally redirect to login page
+                setTimeout(() => {
+                    window.location.href = '/login.html';
+                }, 2000);
+            },
+            error: function (xhr) {
+                const errMsg = xhr.responseJSON && xhr.responseJSON.message ? xhr.responseJSON.message : 'Signup failed';
+                $('#message').text(errMsg);
+            }
+        });
+    });
+});
+</script>
+</body>
+</html>
