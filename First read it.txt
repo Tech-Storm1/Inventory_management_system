@@ -1,0 +1,1 @@
+Extrat node_modules folder and paste it in Frontend folder and then run npm install command
